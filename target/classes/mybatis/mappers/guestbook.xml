@@ -9,7 +9,7 @@
 			]]>
 		</selectKey>
 		<![CDATA[
-			 insert into guestbook values(null,#{name},#{password},#{message},current_timestamp())
+			 insert into guestbook values(null,#{name},password(#{password}),#{message},current_timestamp())
 		]]>
 	</insert>
 	
@@ -31,5 +31,18 @@
 	delete from guestbook where no=#{no} and password=#{password}
 	]]>
 	</delete>
+	
+	<select id="getListByPage" resultType="guestbookvo" parameterType="int">  <!-- reg_date 와 guestbookvo 의 regDate 필드의 이름이 다르기떄문에 as 를 해준다. -->
+		<![CDATA[                                  
+			select no , name , message,reg_date as regDate from guestbook order by no desc limit #{page},5
+		]]>
+	</select>
+	
+	<delete id="delete2" parameterType="guestbookvo">
+	<![CDATA[ 
+	delete from guestbook where no=#{no} and password=password(#{password})
+	]]>
+	</delete>
+	
 </mapper>
 

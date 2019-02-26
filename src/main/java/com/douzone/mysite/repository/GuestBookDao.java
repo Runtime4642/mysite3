@@ -1,22 +1,14 @@
 package com.douzone.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.GuestBookVo;
-import com.douzone.mysite.vo.UserVo;
 
 @Repository
 public class GuestBookDao {
@@ -79,75 +71,12 @@ public class GuestBookDao {
 				 return list;
 	}
 	
-//	public List<GuestBookVo> getList(int page)
-//	{
-//		
-//			List<GuestBookVo> list = new ArrayList<GuestBookVo>();
-//		
-//		
-//		Connection conn = null;
-//		PreparedStatement pstmt=null;
-//		ResultSet rs =null;
-//		try {
-//			
-//			int sqlPage = page-1;
-//			sqlPage *= 5;
-//			
-//			
-//			 conn = getConnection();
-//			 
-//			 //password는 쿼리에 안쓰는게 좋음 .. 메모리에 올라가면 보안관련 문제가 있기때문
-//			 String sql = "select no , name , password , message,reg_date from guestbook order by no desc limit ?,5";
-//			 pstmt = conn.prepareStatement(sql);
-//			 
-//			 //바인딩
-//			 pstmt.setInt(1, sqlPage);
-//			 rs = pstmt.executeQuery();
-//			 while(rs.next())
-//			 {
-//				 long no = rs.getLong(1);
-//				 String name = rs.getString(2);
-//				 String password = rs.getString(3);
-//				 String message = rs.getString(4);
-//				 String date = rs.getString(5);
-//				 
-//				 GuestBookVo vo = new GuestBookVo();
-//				 vo.setNo(no);
-//				 vo.setName(name);
-//				 vo.setPassword(password);
-//				 vo.setDate(date);
-//				 vo.setMessage(message);
-//				 list.add(vo);
-//			 }
-//			 return list;
-//			 
-//		} catch (SQLException e) {
-//			System.out.println("error:"+e);
-//		} 
-//		finally 
-//		{
-//				try {
-//					if(conn !=null)
-//					conn.close();
-//					if(rs !=null)
-//						rs.close();
-//					if(pstmt != null)
-//						pstmt.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			
-//		}
-//		
-//		
-//		return list;
-//		
-//		
-//		
-//		
-//	}
-//	
-//	
+	public List<GuestBookVo> getList(int page)
+	{
+		return sqlSession.selectList("guestbook.getListByPage",page);
+	}
+	
+	
 	
 	
 	public Long insert(GuestBookVo vo)
@@ -164,6 +93,11 @@ public class GuestBookDao {
 		map.put("no", no);
 		map.put("password", password);
 		sqlSession.delete("guestbook.delete", map);
+	}
+	public boolean delete(GuestBookVo guestbookVo)
+	{
+		int cnt = sqlSession.delete("guestbook.delete2", guestbookVo);
+		return cnt==1;
 	}
 }
 

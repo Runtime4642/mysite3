@@ -30,11 +30,11 @@
 </style>
 <script>
 	//jquery plug-in
-	(function($) {
+	/*(function($) {
 		$.fn.hello = function() {
 			console.log($(this).attr("id") + "----> hello");
 		}
-	})(jQuery);
+	})(jQuery);*/
 
 	var page = 0;
 	var messageBox = function(title, message, select) {
@@ -88,13 +88,13 @@
 	var fetchList = function() {
 		page++;
 		$.ajax({
-			url : "/mysite5/api/gb?a=ajax-list&p=" + page,
-			type : "get",
+			url : "/mysite3/gb/api/list",
+			type : "post",
 			dataType : "json",
-			data : "",
+			data : "p=" + page,
 			success : function(response) {
 				if (response.result == "fail") {
-					console.warn(response.data);
+					console.warn(response.message);
 					return;
 				}
 				if (response.data.length < 5) {
@@ -114,7 +114,7 @@
 	$(function() {
 
 		//날씨 받아오기 코드 수정중. accress cross error -> http 헤더를 수정해야 하는거라서 일단 나둠.
-		realTimeWeather();
+		//realTimeWeather();
 
 		var dialogDelete = $("#dialog-delete-form").dialog(
 				{
@@ -124,15 +124,18 @@
 						"삭제" : function() {
 
 							$.ajax({
-								url : "/mysite5/api/gb",
+								url : "/mysite3/gb/api/delete",
 								type : "post",
 								dataType : "json",
-								data : "a=ajax-delete&password="
+								data : "password="
 										+ $('#password-delete').val() + "&no="
 										+ $('#hidden-no').val(),
 								success : function(response) {
-
-									if (!response.result) {
+									if (response.result == "fail") {
+										console.warn(response.data);
+										return;
+									}
+									if (response.data==null) {
 
 										$('.validateTips-error').show();
 										console.warn(response.data);
@@ -142,7 +145,7 @@
 
 									$(
 											'#list-guestbook li[data-no='
-													+ response.no + ']')
+													+ response.data + ']')
 											.remove();
 
 									dialogDelete.dialog("close");
@@ -206,10 +209,10 @@
 							}
 
 							$.ajax({
-								url : "/mysite5/api/gb",
+								url : "/mysite3/gb/api/insert",
 								type : "post",
 								dataType : "json",
-								data : "a=ajax-insert&name="
+								data : "name="
 										+ $('#input-name').val() + "&message="
 										+ $('#tx-content').val() + "&password="
 										+ $('#input-password').val(),
@@ -263,17 +266,6 @@
 			<div id="guestbook">
 
 				<h1>방명록</h1>
-				<!-- 날씨 받아오기
-				<div class="vis-weather">
-				        <h2 class="vh_hide">날씨정보</h2>
-				        <p class="weather-date"></p>
-				        <ul>
-				            <li class="weather-temp"></li>
-				            <li id="RN1">시간당강수량 : ?</li>
-				            <li class="weather-state-text"></li>
-				        </ul>
-				</div>
-				-->
 				<form id="add-form" action="" method="post">
 					<input type="text" id="input-name" placeholder="이름"> <input
 						type="password" id="input-password" placeholder="비밀번호">

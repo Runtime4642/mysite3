@@ -27,7 +27,16 @@ public class GuestbookService {
 		
 	}
 	
-	public void write(GuestBookVo guestBookVo) {
-		guestbookDao.insert(guestBookVo);
+	public GuestBookVo write(GuestBookVo guestBookVo) {
+		//방금 넣은 데이터의 전체값을 반환해주어야 페이지에 message name 등.. 모든 데이터를 보이게 추가가능
+		return guestbookDao.get(guestbookDao.insert(guestBookVo));
+	}
+	public List<GuestBookVo> getList(int page)
+	{
+		return guestbookDao.getList(page);
+	}
+	
+	public boolean delete(GuestBookVo guestBookVo) {
+		 return guestbookDao.delete(guestBookVo);
 	}
 }
