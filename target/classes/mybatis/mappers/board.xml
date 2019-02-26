@@ -29,7 +29,7 @@
 
 	<select id="view" parameterType="long" resultType="boardvo">
 	<![CDATA[
-	select no,title,contents,o_no as oNo,g_no as gNo,file_name as fileName from board where no=#{no}
+	select board.no as no,title,contents,o_no as oNo,g_no as gNo,file_name as fileName ,user.no as userNo from board,user where board.no=#{no} and user.no = board.user_no
 	]]>
 	</select>
 

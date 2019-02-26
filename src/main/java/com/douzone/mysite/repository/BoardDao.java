@@ -79,69 +79,6 @@ public class BoardDao {
 		map.put("way", way);
 		map.put("page", (page-1)*10);
 		return sqlSession.selectList("board.getSearchList", map);
-//		List<BoardVo> list = new ArrayList<BoardVo>();
-//		Connection conn = null;
-//		PreparedStatement pstmt=null;
-//		ResultSet rs =null;
-//		try {
-//			 page=page-1;
-//			 page=page*10;
-//			 conn = getConnection();
-//
-//			 String sql =  "select board.no,board.title,board.contents,board.write_date,board.hit,board.g_no,board.o_no,board.depth,user.no,user.name from board,user where board.user_no = user.no and "+way+" like '%"+text+"%' order by g_no DESC, o_no ASC limit "+page+",10";
-//			 pstmt = conn.prepareStatement(sql);
-//			 rs = pstmt.executeQuery();
-//				 while(rs.next())
-//				 {
-//					 long no = rs.getLong(1);
-//					 String title = rs.getString(2);
-//					 String contents = rs.getString(3);
-//					 String writeDate = rs.getString(4);
-//					 int hit = rs.getInt(5);
-//					 int gNo = rs.getInt(6);
-//					 int oNo = rs.getInt(7);
-//					 int depth = rs.getInt(8);
-//					 long userNo = rs.getLong(9);
-//					 String userName = rs.getString(10);
-//					 BoardVo boardVo = new BoardVo();
-//					 boardVo.setNo(no);
-//					 boardVo.setTitle(title);
-//					 boardVo.setContents(contents);
-//					 boardVo.setWriteDate(writeDate);
-//					 boardVo.setHit(hit);
-//					 boardVo.setgNo(gNo);
-//					 boardVo.setoNo(oNo);
-//					 boardVo.setDepth(depth);
-//					 boardVo.setUserName(userName);
-//					 boardVo.setUserNo(userNo);
-//					 list.add(boardVo);			 
-//				 }
-//			return list;
-//			 
-//		} catch (SQLException e) {
-//			System.out.println("error:"+e);
-//		} 
-//		finally 
-//		{
-//				try {
-//					if(conn !=null)
-//					conn.close();
-//					if(rs !=null)
-//						rs.close();
-//					if(pstmt != null)
-//						pstmt.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			
-//		}
-//		
-//		
-//		return list;
-//		
-		
-		
-		
 	}	
 
 	public int searchCount(String text,String way) {
@@ -160,50 +97,6 @@ public class BoardDao {
 		map.put("userNo", userNo);
 		map.put("boardNo", boardNo);
 		sqlSession.insert("commentWrite",map);
-//		int count = 0;
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs =null;
-//		try {
-//			conn = getConnection();
-//
-//			 String sql =  "select max(comment.o_no)+1 from board,comment where board.no="+boardNo;
-//			 pstmt = conn.prepareStatement(sql);
-//			 rs = pstmt.executeQuery();
-//			 int oNo =0;
-//			 while(rs.next())
-//			 {
-//				oNo = rs.getInt(1);
-//			 }
-//			 sql = "insert into comment values(null,?,current_timestamp(),?,?,?)";
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, contents);
-//			pstmt.setInt(2, oNo);
-//			pstmt.setLong(3, boardNo);
-//			pstmt.setLong(4, userNo);
-//
-//
-//			count = pstmt.executeUpdate();
-//			return count;
-//		} catch (SQLException e) {
-//			System.out.println("error :" + e);
-//		} finally {
-//			// 자원 정리
-//			try {
-//				if (pstmt != null) {
-//					pstmt.close();
-//				}
-//				if(rs !=null)
-//					rs.close();
-//				if (conn != null) {
-//					conn.close();
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		return count;
 	}
 
 	public List<CommentVo> getCommentList(int page,String boardNo)

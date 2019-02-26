@@ -71,7 +71,7 @@ public class UserController {
 //		return "redirect:/";
 //	}
 	
-	@Auth(modify=true)
+	@Auth
 	@RequestMapping(value="/modify",method=RequestMethod.GET)
 	public String modify(@AuthUser UserVo authUser,Model model)
 	{
@@ -82,7 +82,7 @@ public class UserController {
 		return "user/modify";
 	}
 	
-	@Auth(modify=true)
+	@Auth
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
 	public String modify(@AuthUser UserVo authUser,@ModelAttribute UserVo userVo,Model model)
 	{

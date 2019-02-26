@@ -62,7 +62,7 @@ function showList(){
 					<a href="<c:url value='/' />board/reply?no=${boardVo.no}">답글달기</a>
 					</c:when>
 				</c:choose>	
-				<c:if test="${userNo == authuser.no}">
+				<c:if test="${boardVo.userNo == authuser.no}">
 					<a href="<c:url value='/' />board/modify?no=${boardVo.no}">글수정</a>
 					</c:if>	
 				</div>

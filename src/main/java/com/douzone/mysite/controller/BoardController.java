@@ -79,7 +79,6 @@ public class BoardController {
 		Map<String,Object> map =boardService.view(page, boardNo, boolcomment,start);
 		
 		model.addAttribute("list",map.get("list"));
-		model.addAttribute("userNo",userNo);
 		model.addAttribute("boardVo",map.get("boardVo"));
 		model.addAttribute("bEnd",map.get("bEnd"));
 		model.addAttribute("bStart", map.get("bStart"));

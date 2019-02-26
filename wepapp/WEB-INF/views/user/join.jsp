@@ -12,8 +12,6 @@
 
 <script>
 
-
-
 $(function(){
 	
 	$("#join-form").submit(function(){
@@ -34,11 +32,11 @@ $(function(){
 		}
 		
 		//2-2. 이메일 중복체크 유무
-		//if($("#img-checkemail").is(":visible")==false)
-		//{
-		//	alert("이메일 중복체크를 해주세요");
-		//	return false;
-		//}
+		if($("#img-checkemail").is(":visible")==false)
+		{
+			alert("이메일 중복체크를 해주세요");
+			return false;
+		}
 		//3 비밀번호 비어 있는지 확인
 		if($('input[type="password"]').val()=="")
 		{
@@ -67,13 +65,16 @@ $(function(){
 		};
 		
 		$.ajax({
-			url:"/mysite5/api/user",
+			url:"${pageContext.request.contextPath}/user/api/checkemail",
 			type:"post",
 			dataType:"json",
-			data:"a=ajax-checkemail&email="+email,
+			data:"email="+email,
 			success:function(response){
-				console.log(response);
-				if(response.exist){
+				if(response.result=="fail")
+				{
+					console.error(response.message)	
+				}
+				if(response.data){
 					alert("이미존재하는 이메일입니다.");
 					$('email').val("").focus();
 					$('#img-checkemail').hide();
@@ -96,8 +97,11 @@ $(function(){
 	$('#email').change(function(){
 		if($("#img-checkemail").is(":visible")==true)
 		{
-			alert("체크후 아이디변경");
-			emailChecked();
+			$('#img-checkemail').hide();
+			$('#btn-checkemail').show();
+			//alert("체크후 아이디변경");
+			//emailChecked();
+			
 		}
 	});
 });

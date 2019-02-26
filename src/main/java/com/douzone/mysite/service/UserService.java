@@ -38,5 +38,9 @@ public class UserService {
 		return result;
 	}
 	
+	public boolean existEmail(String email) {
+		return userDao.get(email)!=null;
+	}
+	
 
 }
