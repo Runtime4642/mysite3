@@ -2,6 +2,7 @@ package com.douzone.mysite.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.douzone.mysite.repository.SiteDao;
 import com.douzone.mysite.vo.SiteVo;

@@ -17,6 +17,7 @@ import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.security.Auth;
+import com.douzone.security.AuthUser;
 
 
 @Controller
@@ -90,20 +91,17 @@ public class BoardController {
 	public String write() {
 		return "board/write";
 	}
+	
+	@Auth
 	@RequestMapping(value="/write",method=RequestMethod.POST)
-	public String write(HttpSession session,@ModelAttribute BoardVo boardVo) {
-		UserVo authUser = (UserVo)session.getAttribute("authuser");
-		if(authUser ==null)
-		{
-			System.out.println("error 발생 해야함");
-			return "";
-		}
+	public String write(@AuthUser UserVo authUser,@ModelAttribute BoardVo boardVo) {
 		boardVo.setUserNo(authUser.getNo());
 		boardService.write(boardVo);
 		
 		return "redirect:/board/";
 	}
 
+	@Auth
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	public String delete(@RequestParam("no") String no)
 	{
@@ -111,12 +109,15 @@ public class BoardController {
 		return "redirect:/board/";
 	}
 	
+	@Auth
 	@RequestMapping(value="/modify",method=RequestMethod.GET)
 	public String modify(@RequestParam("no") String no,Model model)
 	{
 		model.addAttribute("boardVo",boardService.modifyShow(no));
 		return "board/modify";
 	}
+	
+	@Auth
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
 	public String modify(@ModelAttribute BoardVo boardVo,Model model)
 	{
@@ -125,43 +126,36 @@ public class BoardController {
 		return "redirect:/board/";
 	}
 	
+	@Auth
 	@RequestMapping(value="/reply",method=RequestMethod.GET)
 	public String reply()
 	{
 		
 		return "board/reply";
 	}
+	@Auth
 	@RequestMapping(value="/reply",method=RequestMethod.POST)
-	public String reply(HttpSession session,@ModelAttribute BoardVo boardVo)
+	public String reply(@AuthUser UserVo authUser,@ModelAttribute BoardVo boardVo)
 	{
-		UserVo authUser = (UserVo)session.getAttribute("authuser");
-		if(authUser ==null)
-		{
-			System.out.println("error 발생 해야함");
-			return "";
-		}
 		boardVo.setUserNo(authUser.getNo());
 		boardService.reply(boardVo);
 		return "redirect:/board/";
 	}
 	
+	@Auth
 	@RequestMapping(value="/comment",method=RequestMethod.POST)
-	public String comment(HttpSession session,
+	public String comment(@AuthUser UserVo authUser,
 			@RequestParam(value="contents",required=false) String contents,
 			@RequestParam(value="boardNo",required=false) Long boardNo,Model model)
 	{
-		UserVo authUser = (UserVo)session.getAttribute("authuser");
-		if(authUser ==null)
-		{
-			System.out.println("error 발생 해야함");
-			return "";
-		}
-		
+
 		
 		boardService.comment(contents, authUser.getNo(), boardNo);
 		model.addAttribute("no",boardNo);
 		return "redirect:/board/view";
 	}
+	
+	@Auth
 	@RequestMapping(value="/commentdelete",method=RequestMethod.GET)
 	public String commentDelete(
 			@RequestParam(value="boardNo",required=false) String boardNo,

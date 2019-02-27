@@ -6,7 +6,7 @@
 	
 	<update id="mainUpdate" parameterType="sitevo">
 	<![CDATA[
-			update site set title=#{title} ,welcome=#{welcome},profile='일단보류',description=#{description}
+			update site set title=#{title} ,welcome=#{welcome},profile=#{profile},description=#{description}
 		]]>
 	</update>
 	<select id="mainGet" resultType="sitevo"> 

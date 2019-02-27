@@ -10,6 +10,9 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!--mvc resources mapping  -->
+ 	<mvc:resources mapping="/uploads/images/**" location="file:/uploads/" />
+
 
 	<!-- validator(넘어오는 값 확인), conversionService(type바꾸는 등..), messageConverter 
 		를 자동으로 등록 -->
@@ -40,13 +43,14 @@
 				class="com.douzone.security.AuthUserHandlerMethodArgumentResolver"></bean>
 		</mvc:argument-resolvers>
 
+		
 	</mvc:annotation-driven>
 
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 wepapp 에서 assets 폴더를 찾을때 사용 -->
 	<mvc:default-servlet-handler />
 
-
+	
 
 	<!-- annotation 하겠다. -->
 	<context:annotation-config />
@@ -87,6 +91,17 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1" />
 	</bean>
+	
+	<!-- 멀티파트 리졸버 -->
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 최대업로드 가능한 바이트크기 -->
+		<property name="maxUploadSize" value="52428800" />
+		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+		<!-- property name="maxInMemorySize" value="52428800" /-->
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>	
 
 
 	<!-- auto proxy -->

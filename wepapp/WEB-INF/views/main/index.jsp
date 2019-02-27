@@ -17,7 +17,7 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<img id="profile" src="${pageContext.request.contextPath }/assets/images/profile.jpg" 
+					<img id="profile" onerror="this.src='${pageContext.request.contextPath }/assets/images/default_user.png'" src="${pageContext.request.contextPath }${siteVo.profile }" 
 					style="width:120px">
 					<h2>${fn:replace(siteVo.welcome, newline, "<br>") }</h2>
 					<p>

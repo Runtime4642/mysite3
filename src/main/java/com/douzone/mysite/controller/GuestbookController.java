@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.service.GuestbookService;
 import com.douzone.mysite.vo.GuestBookVo;
+import com.douzone.security.Auth;
 
 
 @Controller
@@ -32,6 +33,7 @@ public class GuestbookController {
 		return "guestbook/delete";
 	}
 	
+	@Auth
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	public String delete(@RequestParam(value="no",required=false) String no,
 			@RequestParam(value="password",required=false) String password) {
@@ -40,6 +42,7 @@ public class GuestbookController {
 		return "redirect:/gb";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write",method=RequestMethod.POST)
 	public String write(@ModelAttribute GuestBookVo guestbookVo) {
 		
