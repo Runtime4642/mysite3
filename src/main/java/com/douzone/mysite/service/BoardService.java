@@ -1,5 +1,6 @@
 package com.douzone.mysite.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -176,7 +177,32 @@ public class BoardService {
 		return result;
 	}
 	public boolean delete(String no) {
-		boolean result = boardDao.delete(no);
+		String url =boardDao.getFileNameByNo(no);
+		boolean result=false;
+		if(url !=null && !url.equals("")) {
+		String filePath = "/uploads/";
+		String fileName = url.substring(url.lastIndexOf('/') + 1);
+		File file = new File(filePath + fileName);
+		if (file.exists()) {
+			
+			if (file.delete()) {
+				System.out.println("파일삭제 성공");
+				result= boardDao.delete(no);
+			} else {
+				System.out.println("파일삭제 실패");
+				return false;
+			}
+		} 
+		else {
+			System.out.println("파일이 존재하지 않습니다.");
+			return false;
+		}
+		}
+		//url == null 이면 , 즉 첨부파일이 없는 게시판이면
+		else {
+			result= boardDao.delete(no);
+		}
+		
 		return result;
 	}
 	public boolean modify(BoardVo boardVo) {
@@ -196,4 +222,5 @@ public class BoardService {
 	public void commentDelete(String commentNo) {
 		boardDao.commentDelete(commentNo);
 	}
+	
 }

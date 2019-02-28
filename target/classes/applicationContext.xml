@@ -53,4 +53,8 @@
 
 	<!-- auto proxy -->
 	<aop:aspectj-autoproxy />
+
+	
+
+
 </beans>

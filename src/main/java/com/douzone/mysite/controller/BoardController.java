@@ -3,8 +3,6 @@ package com.douzone.mysite.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.douzone.mysite.service.BoardService;
+import com.douzone.mysite.service.FileuploadService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.security.Auth;
@@ -26,6 +26,9 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private FileuploadService fileuploadService;
 	
 	@RequestMapping({"","/list","/select"})
 	public String list(@RequestParam(value="page",required=false,defaultValue="1") String page,
@@ -94,7 +97,10 @@ public class BoardController {
 	
 	@Auth
 	@RequestMapping(value="/write",method=RequestMethod.POST)
-	public String write(@AuthUser UserVo authUser,@ModelAttribute BoardVo boardVo) {
+	public String write(@AuthUser UserVo authUser,@ModelAttribute BoardVo boardVo,@RequestParam(value="file")MultipartFile multipartFile) {
+		
+		String fileName = fileuploadService.restore(multipartFile,"board");
+		boardVo.setFileName(fileName);
 		boardVo.setUserNo(authUser.getNo());
 		boardService.write(boardVo);
 		
@@ -121,7 +127,6 @@ public class BoardController {
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
 	public String modify(@ModelAttribute BoardVo boardVo,Model model)
 	{
-		
 		boardService.modify(boardVo);
 		return "redirect:/board/";
 	}

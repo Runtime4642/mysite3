@@ -100,5 +100,11 @@
 	select board.no as no,board.title as title ,board.contents as contents , board.write_date as writeDate,board.hit as hit,board.g_no as gNo,board.o_no as oNo,board.depth as depth,user.no as userNo,user.name as userName from board,user where board.user_no = user.no and ${way} like '%${text}%' order by g_no DESC, o_no ASC limit #{page},10
 		]]>
 	</select>
+	
+	<select id="getFileNameByNo" parameterType="String" resultType="String">
+	<![CDATA[
+	select file_name as fileName from board where no = #{no} 
+		]]>
+	</select>
 
 </mapper>

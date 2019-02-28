@@ -35,7 +35,7 @@ public class AdminController {
 	
 	@RequestMapping("/main/update")
 	public String mainUpdate(@ModelAttribute SiteVo siteVo,Model model,@RequestParam(value="img") MultipartFile multipartFile) {
-		String profile = fileuploadService.restore(multipartFile,true);
+		String profile = fileuploadService.restore(multipartFile,"profile");
 		siteVo.setProfile(profile);
 		boolean result = siteService.mainUpdate(siteVo);
 		model.addAttribute("result",result);

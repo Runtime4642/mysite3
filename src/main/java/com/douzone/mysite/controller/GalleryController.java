@@ -34,7 +34,7 @@ public class GalleryController {
 	public String upload(@RequestParam(value="file") MultipartFile multipartFile,
 			@ModelAttribute GalleryVo galleryVo)
 	{
-		String fileURL=fileuploadService.restore(multipartFile, false);
+		String fileURL=fileuploadService.restore(multipartFile, "gallery");
 		galleryVo.setImageURL(fileURL);
 		galleryService.saveDB(galleryVo);
 		return "redirect:/gallery";

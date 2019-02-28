@@ -1,10 +1,15 @@
 package com.douzone.mysite.controller;
 
-import javax.servlet.http.HttpSession;
+
+import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +18,6 @@ import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.security.Auth;
 import com.douzone.security.AuthUser;
-import com.douzone.security.Auth.Role;
 
 @RequestMapping("/user")
 @Controller
@@ -30,7 +34,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/join",method=RequestMethod.POST)
-	public String join(@ModelAttribute UserVo userVo) {
+	public String join(@ModelAttribute @Valid UserVo  userVo,BindingResult result ,Model model) {
+		if(result.hasErrors())
+		{
+		   model.addAllAttributes(result.getModel());
+			return "user/join";
+		}
 		if(userService.join(userVo)==1)
 		return "redirect:/user/joinsuccess";
 		
@@ -86,7 +95,7 @@ public class UserController {
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
 	public String modify(@AuthUser UserVo authUser,@ModelAttribute UserVo userVo,Model model)
 	{
-		
+
 		userVo.setNo(authUser.getNo());
 		if(userService.modify(userVo)) {
 		model.addAttribute("result",true);

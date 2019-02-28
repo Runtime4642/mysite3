@@ -55,18 +55,22 @@
 
 	var render = function(vo, mode) {
 
+		// 현업에 가면 이렇게 안함. -> js template library 라이브러리 사용
+		// ex) ejs, underscore, mustache
+
+		//   -->  /\n/g 정규 표현식 \n 모든 개행(g)을
+		var htmls = "<li data-no='"+vo.no+"'><strong>"
+				+ vo.name
+				+ "</strong><p>"
+				+ vo.message.replace(/\n/g, "<br>")
+				+ "</p><strong></strong><a href='' data-no='"+vo.no+"'>삭제</a></li>";
+		
 		//작성 mode ==1
 		if (mode == 1) {
 
 			// 현업에 가면 이렇게 안함. -> js template library 라이브러리 사용
 			// ex) ejs, underscore, mustache
 
-			//   -->  /\n/g 정규 표현식 \n 모든 개행(g)을
-			var htmls = "<li data-no='"+vo.no+"'><strong>"
-					+ vo.name
-					+ "</strong><p>"
-					+ vo.message.replace(/\n/g, "<br>")
-					+ "</p><strong></strong><a href='' data-no='"+vo.no+"'>삭제</a></li>";
 
 			$("#list-guestbook").prepend(htmls);
 		}
@@ -75,12 +79,6 @@
 			// 현업에 가면 이렇게 안함. -> js template library 라이브러리 사용
 			// ex) ejs, underscore, mustache
 
-			//   -->  /\n/g 정규 표현식 \n 모든 개행(g)을
-			var htmls = "<li data-no='"+vo.no+"'><strong>"
-					+ vo.name
-					+ "</strong><p>"
-					+ vo.message.replace(/\n/g, "<br>")
-					+ "</p><strong></strong><a href='' data-no='"+vo.no+"'>삭제</a></li>";
 
 			$("#list-guestbook").append(htmls);
 		}

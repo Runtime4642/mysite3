@@ -17,9 +17,10 @@ public class FileuploadService {
 	
 	private static final String URL= "/uploads/images";
 	
+	private static final String BOARD_URL= "/uploads/board";
 	
 	//현재는 프로필 업로드만 하게 해놓음
-	public String restore(MultipartFile multipartFile,boolean profile) {
+	public String restore(MultipartFile multipartFile,String mode) {
 		String url ="";
 		try {
 		//비어 있는지 검사
@@ -36,11 +37,11 @@ public class FileuploadService {
 		
 		String saveFileName;
 		//저장할 파일 이름
-		if(profile) {
+		if(mode.equals("profile")) {
 		saveFileName = "profile."+extName;
 		}
 		else{
-			saveFileName=generateSaveFileName(extName);
+			saveFileName=generateSaveFileName(originalFileName);
 		}
 		
 		byte[] fileData = multipartFile.getBytes();
@@ -48,7 +49,11 @@ public class FileuploadService {
 		os.write(fileData);
 		os.close();
 		
+		if(mode.equals("board"))
+			url = BOARD_URL + "/" + saveFileName;
+		else {
 		url = URL + "/" + saveFileName;
+		}
 		}catch(IOException ex)
 		{
 			new RuntimeException("upload fail");
@@ -57,7 +62,7 @@ public class FileuploadService {
 		
 	}
 
-	private String generateSaveFileName(String extName) {
+	private String generateSaveFileName(String originalFileName) {
 		String fileName = "";
 		Calendar calendar = Calendar.getInstance();
 		fileName += calendar.get(Calendar.YEAR);
@@ -67,7 +72,7 @@ public class FileuploadService {
 		fileName += calendar.get(Calendar.MINUTE);
 		fileName += calendar.get(Calendar.SECOND);
 		fileName += calendar.get(Calendar.MILLISECOND);
-		fileName += "."+extName;
+		fileName += "_"+originalFileName;
 		return fileName;
 	}
 

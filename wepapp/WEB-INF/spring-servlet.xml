@@ -12,6 +12,7 @@
 
 	<!--mvc resources mapping  -->
  	<mvc:resources mapping="/uploads/images/**" location="file:/uploads/" />
+ 	<mvc:resources mapping="/uploads/board/**" location="file:/uploads/" />
 
 
 	<!-- validator(넘어오는 값 확인), conversionService(type바꾸는 등..), messageConverter 
@@ -104,6 +105,16 @@
 	</bean>	
 
 
-	<!-- auto proxy -->
+	<!-- auto proxy 양쪽에 다해줘야함-->
 	<aop:aspectj-autoproxy />
+	
+	<!--  MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+			</list>
+		</property>
+	</bean>
 </beans>

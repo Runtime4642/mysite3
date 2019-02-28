@@ -225,7 +225,7 @@ a.file{
 	display:block;
 	width:20px;
 	height:20px; 
-	background:url("/mysite5/assets/images/down.png") no-repeat 0 0;
+	background:url("/mysite3/assets/images/down.png") no-repeat 0 0;
 	font-size:0;
 	margin:10px auto;
 	
@@ -253,7 +253,7 @@ div.pager  ul li a:hover	{ text-decoration: none; color:#f00 }
 /* 첨부파일 */
 #attach{
 	padding-right: 15px;
-	background: url('/mysite5/assets/images/ico_arrow3.gif') right 1px no-repeat;
+	background: url('/mysite3/assets/images/ico_arrow3.gif') right 1px no-repeat;
 	    font-size: 12px;
 	    float:right;
 	   

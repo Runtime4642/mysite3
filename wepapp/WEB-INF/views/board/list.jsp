@@ -29,6 +29,7 @@
 						<th>글쓴이</th>
 						<th>조회수</th>
 						<th>작성일</th>
+						<th>첨부파일</th>
 						<th>&nbsp;</th>
 					</tr>
 						<c:set var="count" value="${fn:length(list) }"/>
@@ -46,7 +47,14 @@
 						<td>${vo.userName}</td>
 						<td>${vo.hit}</td>
 						<td>${vo.writeDate}</td>
-
+						<c:choose>
+							<c:when test="${not empty vo.fileName}">
+						<td><a href="${pageContext.request.contextPath }${vo.fileName}" download class="file"></a></td>
+							</c:when>
+							<c:otherwise>
+								<td>&nbsp;</td>
+							</c:otherwise>
+						</c:choose>
 						
 						<c:choose>
 							<c:when test="${authuser.no==vo.userNo}">
