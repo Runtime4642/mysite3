@@ -34,7 +34,7 @@ function showList(){
 						<td class="label"></td>
 						<td id="attach-label"><a id='attach' onclick="showList()" >첨부파일</a><br>
 						<ul id="default" style="display:none;">
-							<li id="attach-down"><a href="${pageContext.request.contextPath }${vo.fileName}" download>파일다운로드</a></li>
+							<li id="attach-down"><a href="${pageContext.request.contextPath }${boardVo.fileName}" download>파일다운로드</a></li>
 							
 						</ul>
 						</td>
