@@ -24,7 +24,6 @@ public class GuestbookService {
 	
 	public void delete(String no,String password) {
 	 guestbookDao.delete(no, password);
-		
 	}
 	
 	public GuestBookVo write(GuestBookVo guestBookVo) {

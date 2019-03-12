@@ -9,6 +9,7 @@
 	</insert>
 	
 	
+
 	
 	<select id="getByEmailAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[

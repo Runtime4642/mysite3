@@ -33,16 +33,14 @@ public class GuestbookController {
 		return "guestbook/delete";
 	}
 	
-	@Auth
 	@RequestMapping(value="/delete",method=RequestMethod.POST)
 	public String delete(@RequestParam(value="no",required=false) String no,
 			@RequestParam(value="password",required=false) String password) {
-		
+		System.out.println(no+"@@@@@"+password);
 		GuestbookService.delete(no, password);
 		return "redirect:/gb";
 	}
 	
-	@Auth
 	@RequestMapping(value="/write",method=RequestMethod.POST)
 	public String write(@ModelAttribute GuestBookVo guestbookVo) {
 		

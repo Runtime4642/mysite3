@@ -75,20 +75,14 @@ public class GuestBookDao {
 	{
 		return sqlSession.selectList("guestbook.getListByPage",page);
 	}
-	
-	
-	
-	
 	public Long insert(GuestBookVo vo)
 	{
 		sqlSession.insert("guestbook.insert", vo);
 		long no = vo.getNo();
 		return no;
 	}
-
 	public void delete(String no,String password)
 	{
-		
 		Map<String,String> map = new HashMap<>();
 		map.put("no", no);
 		map.put("password", password);

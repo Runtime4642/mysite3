@@ -22,9 +22,6 @@ public class GuestbookController {
 	@RequestMapping("")
 	public String main()
 	{
-		
-		
-		
 		return "guestbook/index-ajax";
 	}
 	
@@ -34,7 +31,7 @@ public class GuestbookController {
 	{
 		return JSONResult.success(guestbookService.getList(page));
 	}
-	
+	 
 	@ResponseBody
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
 	public JSONResult write(@ModelAttribute GuestBookVo guestBookVo)

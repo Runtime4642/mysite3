@@ -45,10 +45,13 @@ public class FileuploadService {
 		}
 		
 		byte[] fileData = multipartFile.getBytes();
+//		FileOutputStream fileOutputStream = new FileOutputStream(SAVE_PATH+"/"+saveFileName);
+//		OutputStreamWriter outputStreamWrite = new OutputStreamWriter(fileOutputStream,"utf-8");
+//		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWrite);
 		OutputStream os = new FileOutputStream(SAVE_PATH+"/"+saveFileName);
 		os.write(fileData);
 		os.close();
-		
+//		
 		if(mode.equals("board"))
 			url = BOARD_URL + "/" + saveFileName;
 		else {
