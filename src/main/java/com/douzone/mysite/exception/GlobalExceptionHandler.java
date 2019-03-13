@@ -1,14 +1,14 @@
 package com.douzone.mysite.exception;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	
+	private static final Log LOG = LogFactory.getLog( GlobalExceptionHandler.class );
 	@ExceptionHandler(Exception.class)
 	public void handlerException(HttpServletRequest request,HttpServletResponse response,Exception e) throws Exception {
 		
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 		
 		
 		//서비스할때는 log 찍어줘야함 -> 에러내용 파일저장
-		//log.error(errors.toString());
+		//LOG.error(errors.toString());
 		
 		
 		
